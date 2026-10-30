@@ -113,14 +113,12 @@
       text-transform: uppercase;
     }
 
-    /* Premium Member Card Banner */
     .premium-banner {
       background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(147, 51, 234, 0.2));
       border: 1px solid rgba(168, 85, 247, 0.3);
       border-radius: 12px;
       padding: 1rem;
       margin-top: 1rem;
-      text-align: center;
     }
 
     .premium-banner h4 {
@@ -133,6 +131,7 @@
     .premium-banner p {
       font-size: 0.75rem;
       color: #cbd5e1;
+      line-height: 1.4;
     }
 
     .user-card {
@@ -142,26 +141,33 @@
       padding: 0.85rem;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .user-avatar-img {
-      width: 36px;
-      height: 36px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       background: #2563eb;
       object-fit: cover;
+      flex-shrink: 0;
+      border: 2px solid rgba(59, 130, 246, 0.5);
     }
 
     .user-name {
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       font-weight: 700;
       color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 140px;
     }
 
     .user-tag {
       font-size: 0.72rem;
-      color: #64748b;
+      color: #38bdf8;
+      font-weight: 600;
     }
 
     /* Main Area */
@@ -285,46 +291,46 @@
         <span class="sidebar-title">Kova Tech</span>
       </a>
 
-      <div class="menu-heading">General</div>
+      <div class="menu-heading">General Menu</div>
       <ul class="nav-menu">
-        <li class="nav-item"><a href="46466.html" class="active">📦 Our Products</a></li>
-        <li class="nav-item"><a href="index.html">🌐 Main Home Page</a></li>
+        <li class="nav-item"><a href="46466.html" class="active">Product Catalog</a></li>
+        <li class="nav-item"><a href="index.html">Main Home Page</a></li>
       </ul>
 
-      <div class="menu-heading">Premium Features</div>
+      <div class="menu-heading">Upcoming Perks</div>
       <ul class="nav-menu">
         <li class="nav-item disabled">
           <a href="#">
-            <span>⭐ VIP Member Hub</span>
+            <span>VIP Member Hub</span>
             <span class="badge-soon">Soon</span>
           </a>
         </li>
         <li class="nav-item disabled">
           <a href="#">
-            <span>💳 Saved Cards & Balance</span>
+            <span>Saved Balance</span>
             <span class="badge-soon">Soon</span>
           </a>
         </li>
         <li class="nav-item disabled">
           <a href="#">
-            <span>🚀 Instant Rank Up</span>
+            <span>Instant Rank Up</span>
             <span class="badge-soon">Soon</span>
           </a>
         </li>
       </ul>
 
       <div class="premium-banner">
-        <h4>👑 Premium Access</h4>
-        <p>Special perks and balance top-ups are coming soon!</p>
+        <h4>Exclusive Access</h4>
+        <p>Premium memberships and balance checkout features will be available soon.</p>
       </div>
     </div>
 
     <!-- User Profile Footer -->
     <div class="user-card">
-      <img src="k.png" alt="User Avatar" class="user-avatar-img">
+      <img src="k.png" id="sidebar-user-avatar" alt="User Avatar" class="user-avatar-img">
       <div>
-        <div class="user-name">Discord User</div>
-        <div class="user-tag">Human Verified ✓</div>
+        <div class="user-name" id="sidebar-user-name">Loading Profile...</div>
+        <div class="user-tag" id="sidebar-user-tag">Verified User</div>
       </div>
     </div>
   </aside>
@@ -333,14 +339,14 @@
   <main>
     <div class="top-bar">
       <div class="welcome-text">
-        <h1>Welcome Back! 👋</h1>
-        <p>Browse our items below and buy them directly in our Roblox game.</p>
+        <h1 id="welcome-heading">Welcome Back</h1>
+        <p>Browse our items below and complete your purchase securely inside our Roblox game hub.</p>
       </div>
 
       <div class="wallet-box">
         <div style="text-align: right;">
           <div style="font-family: 'Plus Jakarta Sans'; font-weight: 800; font-size: 1.1rem;">£0.00 / $0.00</div>
-          <div style="font-size: 0.72rem; color: #64748b;">Kova Money</div>
+          <div style="font-size: 0.72rem; color: #64748b;">Store Balance</div>
         </div>
         <span class="badge-soon">Coming Soon</span>
       </div>
@@ -393,5 +399,58 @@
     </div>
   </main>
 
+  <!-- Discord Profile Data Loader -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Extract access token from URL fragment (hash)
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      let accessToken = hashParams.get('access_token');
+
+      // 2. Cache token in session or retrieve existing
+      if (accessToken) {
+        sessionStorage.setItem('discord_access_token', accessToken);
+        window.history.replaceState(null, null, window.location.pathname); // Clean token from URL
+      } else {
+        accessToken = sessionStorage.getItem('discord_access_token');
+      }
+
+      // 3. Fetch account details from Discord API
+      if (accessToken) {
+        fetch('https://discord.com/api/v10/users/@me', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        })
+        .then(res => {
+          if (!res.ok) throw new Error("Invalid Token");
+          return res.json();
+        })
+        .then(user => {
+          const displayName = user.global_name || user.username;
+          
+          // Update Sidebar Name & Header Greeting
+          document.getElementById('sidebar-user-name').textContent = displayName;
+          document.getElementById('welcome-heading').textContent = `Welcome, ${displayName}`;
+          document.getElementById('sidebar-user-tag').textContent = `@${user.username}`;
+
+          // Update Sidebar Avatar
+          if (user.avatar) {
+            const avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`;
+            document.getElementById('sidebar-user-avatar').src = avatarUrl;
+          } else {
+            // Default Discord Avatar fallback if user has no profile photo
+            const defaultAvatarNum = (BigInt(user.id) >> 22n) % 5n;
+            document.getElementById('sidebar-user-avatar').src = `https://cdn.discordapp.com/embed/avatars/${defaultAvatarNum}.png`;
+          }
+        })
+        .catch(err => {
+          console.error("Discord Fetch Error:", err);
+          document.getElementById('sidebar-user-name').textContent = "Guest User";
+        });
+      } else {
+        document.getElementById('sidebar-user-name').textContent = "Guest User";
+      }
+    });
+  </script>
 </body>
 </html>
