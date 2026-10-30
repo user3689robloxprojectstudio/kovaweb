@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What We Use — Kova Tech</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background: #030712;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Navbar */
+    header {
+      width: 100%;
+      padding: 1.5rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      z-index: 10;
+      position: sticky;
+      top: 0;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #ffffff;
+      justify-self: start;
+    }
+
+    .brand-logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    }
+
+    .brand-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      justify-self: center;
+    }
+
+    .nav-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #ffffff;
+    }
+
+    .user-profile {
+      justify-self: end;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .user-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #2563eb;
+    }
+
+    /* Hero Section */
+    .page-hero {
+      text-align: center;
+      padding: 5rem 2rem 3rem 2rem;
+      background: radial-gradient(circle at 50% 20%, #0b1736 0%, #030712 70%);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(37, 99, 235, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: #60a5fa;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 30px;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .page-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+
+    .page-title span {
+      color: #3b82f6;
+    }
+
+    .page-subtitle {
+      color: #94a3b8;
+      font-size: 1.15rem;
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 2rem 6rem 2rem;
+      flex: 1;
+    }
+
+    /* Featured Parcel Animation Banner */
+    .parcel-hero-card {
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(6, 13, 31, 0.9));
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 24px;
+      padding: 4rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      margin-bottom: 4rem;
+    }
+
+    .parcel-info {
+      max-width: 580px;
+      z-index: 2;
+    }
+
+    .parcel-info h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 1rem;
+    }
+
+    .parcel-info p {
+      color: #94a3b8;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Animated Radar Graphic */
+    .parcel-graphic {
+      position: relative;
+      width: 240px;
+      height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .radar-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      animation: expandRing 4s infinite linear;
+    }
+
+    .ring-1 { width: 100%; height: 100%; animation-delay: 0s; }
+    .ring-2 { width: 100%; height: 100%; animation-delay: 1.3s; }
+    .ring-3 { width: 100%; height: 100%; animation-delay: 2.6s; }
+
+    @keyframes expandRing {
+      0% { transform: scale(0.5); opacity: 0.8; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+
+    .parcel-icon-wrapper {
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, #1d4ed8 0%, #0b1736 100%);
+      border: 2px solid rgba(56, 189, 248, 0.5);
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 40px rgba(37, 99, 235, 0.5);
+      animation: floatGraphic 3.5s ease-in-out infinite;
+    }
+
+    @keyframes floatGraphic {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(2deg); }
+    }
+
+    .parcel-img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+    }
+
+    /* Service Breakdown Grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .service-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 2.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .service-card:hover {
+      border-color: rgba(59, 130, 246, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    .service-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .service-card h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+
+    .service-card p {
+      color: #94a3b8;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      background: #030712;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .btn-social {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #ffffff;
+      padding: 0.75rem 1.8rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-social:hover {
+      background: #5865F2;
+      border-color: #5865F2;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(88, 101, 242, 0.4);
+    }
+
+    .copyright-text {
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header>
+    <a href="index.html" class="brand">
+      <img src="k.png" alt="Kova Tech Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='k.jpg';">
+      <span class="brand-name">Kova Tech</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="whatweuse.html" class="active">What We Use</a></li>
+      <li><a href="producttos.html">Product Policy</a></li>
+      <li><a href="tickettos.html">Ticket Policy</a></li>
+    </ul>
+
+    <div class="user-profile">
+      <div class="user-avatar"></div>
+      <span>Guest</span> ▾
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="page-hero">
+    <div class="badge">Tech Infrastructure & Integration</div>
+    <h1 class="page-title">What We <span>Use</span></h1>
+    <p class="page-subtitle">
+      Transparency is key. Discover the high-performance platforms and external services powering Kova Tech's automated ecosystem.
+    </p>
+  </section>
+
+  <!-- Content Container -->
+  <main class="container">
+    
+    <!-- Animated Parcel Feature Card -->
+    <div class="parcel-hero-card">
+      <div class="parcel-info">
+        <h2>Powered by Parcel</h2>
+        <p>
+          At <strong>Kova Tech</strong>, our core automated hub runs exclusively on <strong>Parcel</strong>. Parcel supplies the backend infrastructure that handles instant product whitelisting, gamepass verification, asset delivery, and Roblox group rank synchronization.
+        </p>
+        <p>
+          By utilizing Parcel, we ensure that every purchase from our hub is fulfilled within seconds—24/7, with zero human delay or manual intervention needed.
+        </p>
+      </div>
+
+      <div class="parcel-graphic">
+        <div class="radar-ring ring-1"></div>
+        <div class="radar-ring ring-2"></div>
+        <div class="radar-ring ring-3"></div>
+        <div class="parcel-icon-wrapper">
+          <img src="parcel.png" alt="Parcel Logo" class="parcel-img" onerror="this.onerror=null; this.src='parcel.jpg';">
+        </div>
+      </div>
+    </div>
+
+    <!-- Service Feature Cards -->
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">⚡</div>
+        <h3>Instant Delivery</h3>
+        <p>Automated API synchronization processes your transactions and assigns game access immediately upon purchase verification.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🔒</div>
+        <h3>Secure Whitelisting</h3>
+        <p>Cryptographically secured whitelisting prevents unauthorized access or asset pirating across all Kova Tech products.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🌐</div>
+        <h3>99.9% High Uptime</h3>
+        <p>Reliable cloud infrastructure guarantees our product hub and licensing servers remain online around the clock.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <a href="https://discord.gg/JTbgdHaUrM" target="_blank" class="btn-social">
+      <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+      </svg>
+      Join Our Discord Server
+    </a>
+    <p class="copyright-text">© 2026 Kova Tech. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

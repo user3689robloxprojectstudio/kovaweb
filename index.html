@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kova Tech — High Performance Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background: #030712;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    .hero-wrapper {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: radial-gradient(circle at 50% 30%, #0b1736 0%, #030712 70%);
+    }
+
+    header {
+      width: 100%;
+      padding: 1.5rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      z-index: 10;
+      position: sticky;
+      top: 0;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #ffffff;
+      justify-self: start;
+    }
+
+    .brand-logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    }
+
+    .brand-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      justify-self: center;
+    }
+
+    .nav-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #ffffff;
+    }
+
+    .btn-login-link {
+      justify-self: end;
+      background: #5865F2;
+      color: #ffffff;
+      padding: 0.65rem 1.3rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(88, 101, 242, 0.35);
+    }
+
+    .btn-login-link:hover {
+      background: #4752C4;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(88, 101, 242, 0.5);
+    }
+
+    .hero-content {
+      text-align: center;
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .hero-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 4rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1.5px;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-title .blue-text {
+      color: #3b82f6;
+    }
+
+    .typing-cursor {
+      display: inline-block;
+      width: 4px;
+      height: 3.5rem;
+      background-color: #3b82f6;
+      margin-left: 6px;
+      vertical-align: middle;
+      animation: blink 0.75s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .hero-subtitle {
+      color: #94a3b8;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      max-width: 620px;
+      margin-bottom: 2rem;
+    }
+
+    .btn-play {
+      background: #2563eb;
+      color: #ffffff;
+      padding: 0.9rem 2.8rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-play:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+
+    .marquee-container {
+      background: #060d1f;
+      border-top: 1px solid rgba(59, 130, 246, 0.15);
+      border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+      overflow: hidden;
+      padding: 1rem 0;
+      white-space: nowrap;
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      gap: 2.5rem;
+      animation: marquee 35s linear infinite;
+    }
+
+    .marquee-item {
+      color: #93c5fd;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-transform: lowercase;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .cta-section {
+      text-align: center;
+      padding: 4rem 2rem 6rem 2rem;
+      background: linear-gradient(180deg, #030712 0%, #09122a 100%);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .cta-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-buy {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      padding: 1rem 2.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: inline-block;
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 2rem;
+      text-align: center;
+      background: #030712;
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero-wrapper">
+    <header>
+      <a href="index.html" class="brand">
+        <img src="k.png" alt="Kova Tech Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='k.jpg';">
+        <span class="brand-name">Kova Tech</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="product.html">Products</a></li>
+        <li><a href="whatweuse.html">What We Use</a></li>
+        <li><a href="producttos.html">Product Policy</a></li>
+        <li><a href="tickettos.html">Ticket Policy</a></li>
+      </ul>
+
+      <!-- Directs strictly to login.html -->
+      <a href="login.html" class="btn-login-link">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+        </svg>
+        Login Portal
+      </a>
+    </header>
+
+    <main class="hero-content">
+      <h1 class="hero-title">
+        Improve your<br>
+        experience <span class="blue-text" id="typewriter"></span><span class="typing-cursor"></span>
+      </h1>
+      <p class="hero-subtitle">
+        We make easy-to-use Roblox items that your players will love. Upgrade your game today without spending too much.
+      </p>
+      <a href="https://www.roblox.com/games/102504175869349/Product-Hub" target="_blank" class="btn-play">
+        Play Store Hub
+      </a>
+    </main>
+  </div>
+
+  <div class="marquee-container">
+    <div class="marquee-track">
+      <div class="marquee-item">easy to use <span>•</span></div>
+      <div class="marquee-item">fast help <span>•</span></div>
+      <div class="marquee-item">top quality <span>•</span></div>
+      <div class="marquee-item">kova tech hub <span>•</span></div>
+      <div class="marquee-item">easy to use <span>•</span></div>
+      <div class="marquee-item">fast help <span>•</span></div>
+    </div>
+  </div>
+
+  <section class="cta-section">
+    <h2 class="cta-title">Ready to view our store?</h2>
+    <a href="https://www.roblox.com/games/102504175869349/Product-Hub" target="_blank" class="btn-buy">
+      Click here to start ➔
+    </a>
+  </section>
+
+  <footer>
+    <p>2026 Kova Tech. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const words = ["here.", "today.", "forever.", "with Kova."];
+    let wordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typewriterElement = document.getElementById("typewriter");
+
+    function typeEffect() {
+      const currentWord = words[wordIndex];
+      if (isDeleting) {
+        typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      if (!isDeleting && charIndex === currentWord.length) {
+        isDeleting = true;
+        setTimeout(typeEffect, 1500);
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+        setTimeout(typeEffect, 400);
+      } else {
+        setTimeout(typeEffect, isDeleting ? 80 : 120);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", typeEffect);
+  </script>
+</body>
+</html>

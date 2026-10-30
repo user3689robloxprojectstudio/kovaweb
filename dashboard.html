@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Kova Tech</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background: #030712;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Side Navigation Bar */
+    aside {
+      width: 270px;
+      background: #060d1f;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2rem 1.2rem;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #ffffff;
+      margin-bottom: 2rem;
+      padding-left: 0.5rem;
+    }
+
+    .sidebar-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .sidebar-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .menu-heading {
+      font-size: 0.75rem;
+      color: #64748b;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 1.2rem 0 0.6rem 0.5rem;
+    }
+
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .nav-item a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0.9rem;
+      color: #94a3b8;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item a:hover,
+    .nav-item a.active {
+      background: rgba(37, 99, 235, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .nav-item.disabled a {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .badge-soon {
+      background: rgba(234, 179, 8, 0.15);
+      border: 1px solid rgba(234, 179, 8, 0.4);
+      color: #fde047;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    /* Premium Member Card Banner */
+    .premium-banner {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(147, 51, 234, 0.2));
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .premium-banner h4 {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #d8b4fe;
+      margin-bottom: 4px;
+    }
+
+    .premium-banner p {
+      font-size: 0.75rem;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+
+    .user-card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-avatar-img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #2563eb;
+      object-fit: cover;
+    }
+
+    .user-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 150px;
+    }
+
+    .user-tag {
+      font-size: 0.72rem;
+      color: #64748b;
+    }
+
+    /* Main Area */
+    main {
+      margin-left: 270px;
+      flex: 1;
+      padding: 2.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 1.5rem;
+    }
+
+    .welcome-text h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+    }
+
+    .welcome-text p {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    .wallet-box {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 0.75rem 1.4rem;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .product-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+    }
+
+    .product-card:hover {
+      border-color: rgba(59, 130, 246, 0.4);
+      transform: translateY(-4px);
+    }
+
+    .product-img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      background: #09122a;
+    }
+
+    .product-details {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .product-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.4rem;
+    }
+
+    .product-desc {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-buy-hub {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      padding: 0.7rem 1.2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-buy-hub:hover {
+      background: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Side Navigation -->
+  <aside>
+    <div>
+      <a href="index.html" class="sidebar-brand">
+        <img src="k.png" alt="Kova Tech" class="sidebar-logo" onerror="this.onerror=null; this.src='k.jpg';">
+        <span class="sidebar-title">Kova Tech</span>
+      </a>
+
+      <div class="menu-heading">General Menu</div>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="46466.html" class="active">Product Catalog</a></li>
+        <li class="nav-item"><a href="index.html">Main Home Page</a></li>
+      </ul>
+
+      <div class="menu-heading">Upcoming Perks</div>
+      <ul class="nav-menu">
+        <li class="nav-item disabled">
+          <a href="#">
+            <span>VIP Member Hub</span>
+            <span class="badge-soon">Soon</span>
+          </a>
+        </li>
+        <li class="nav-item disabled">
+          <a href="#">
+            <span>Saved Balance</span>
+            <span class="badge-soon">Soon</span>
+          </a>
+        </li>
+        <li class="nav-item disabled">
+          <a href="#">
+            <span>Instant Rank Up</span>
+            <span class="badge-soon">Soon</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="premium-banner">
+        <h4>Exclusive Access</h4>
+        <p>Premium memberships and balance checkout features will be available soon.</p>
+      </div>
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="user-card">
+      <img src="k.png" id="user-avatar" alt="User Avatar" class="user-avatar-img">
+      <div>
+        <div class="user-name" id="user-name">Authorized User</div>
+        <div class="user-tag">Verified Account</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Dashboard -->
+  <main>
+    <div class="top-bar">
+      <div class="welcome-text">
+        <h1 id="welcome-heading">Welcome Back</h1>
+        <p>Browse our items below and complete your purchase securely inside our Roblox game hub.</p>
+      </div>
+
+      <div class="wallet-box">
+        <div style="text-align: right;">
+          <div style="font-family: 'Plus Jakarta Sans'; font-weight: 800; font-size: 1.1rem;">£0.00 / $0.00</div>
+          <div style="font-size: 0.72rem; color: #64748b;">Store Balance</div>
+        </div>
+        <span class="badge-soon">Coming Soon</span>
+      </div>
+    </div>
+
+    <div class="products-grid">
+
+      <!-- Product 1 -->
+      <div class="product-card">
+        <img src="product1.png" alt="Main Systems Hub" class="product-img" onerror="this.onerror=null; this.src='k.png';">
+        <div class="product-details">
+          <div>
+            <h3 class="product-name">Main Systems Hub</h3>
+            <p class="product-desc">An all-in-one pack that handles player ranks, gamepasses, and admin commands automatically.</p>
+          </div>
+          <a href="https://www.roblox.com/games/102504175869349/Product-Hub" target="_blank" class="btn-buy-hub">
+            Buy Now in Roblox Hub ➔
+          </a>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card">
+        <img src="product2.png" alt="Dark UI Theme Kit" class="product-img" onerror="this.onerror=null; this.src='k.png';">
+        <div class="product-details">
+          <div>
+            <h3 class="product-name">Dark UI Theme Kit</h3>
+            <p class="product-desc">A clean, dark menu design made specifically for Roblox roleplay and military games.</p>
+          </div>
+          <a href="https://www.roblox.com/games/102504175869349/Product-Hub" target="_blank" class="btn-buy-hub">
+            Buy Now in Roblox Hub ➔
+          </a>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card">
+        <img src="product3.png" alt="Game Protection Suite" class="product-img" onerror="this.onerror=null; this.src='k.png';">
+        <div class="product-details">
+          <div>
+            <h3 class="product-name">Game Protection Suite</h3>
+            <p class="product-desc">Protects your game against exploiters and stops unauthorized copying of your scripts.</p>
+          </div>
+          <a href="https://www.roblox.com/games/102504175869349/Product-Hub" target="_blank" class="btn-buy-hub">
+            Buy Now in Roblox Hub ➔
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Discord OAuth User Parser Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const fragment = new URLSearchParams(window.location.hash.slice(1));
+      const accessToken = fragment.get('access_token');
+
+      if (accessToken) {
+        fetch('https://discord.com/api/users/@me', {
+          headers: { authorization: `Bearer ${accessToken}` }
+        })
+        .then(res => res.json())
+        .then(user => {
+          document.getElementById('user-name').textContent = user.username;
+          document.getElementById('welcome-heading').textContent = `Welcome, ${user.username}`;
+          if (user.avatar) {
+            document.getElementById('user-avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+          }
+        })
+        .catch(err => console.error("Discord Data Fetch Error:", err));
+      }
+    });
+  </script>
+</body>
+</html>
